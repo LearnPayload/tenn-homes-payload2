@@ -1,20 +1,28 @@
 import { seedZipCodes } from './seeders/zipcodes'
-import { getPayload } from 'payload'
+import { getPayload, Payload } from 'payload'
 import config from '../payload.config'
+import { seedFeatures } from './seeders/features'
+import { seedProperties } from './seeders/properties'
+
 async function seed() {
   console.log('Seeding database...')
 
   const payload = await getPayload({ config })
 
-  // clear all collections
-  await payload.delete({
-    collection: 'zipcodes',
-    where: {},
-  })
-
-  console.log('Clearing zipcodes collection first...')
+  console.log('Clearing collections...')
+  await clearCollections(payload)
 
   await seedZipCodes(payload)
+  await seedFeatures(payload)
+  await seedProperties(payload)
+}
+
+function clearCollections(payload: Payload) {
+  return Promise.all([
+    payload.delete({ collection: 'zipcodes', where: {} }),
+    payload.delete({ collection: 'features', where: {} }),
+    payload.delete({ collection: 'properties', where: {} }),
+  ])
 }
 
 seed()

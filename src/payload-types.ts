@@ -70,6 +70,8 @@ export interface Config {
     users: User;
     media: Media;
     zipcodes: Zipcode;
+    features: Feature;
+    properties: Property;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -79,6 +81,8 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     zipcodes: ZipcodesSelect<false> | ZipcodesSelect<true>;
+    features: FeaturesSelect<false> | FeaturesSelect<true>;
+    properties: PropertiesSelect<false> | PropertiesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -185,6 +189,98 @@ export interface Zipcode {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "features".
+ */
+export interface Feature {
+  id: number;
+  /**
+   * Name of the feature (e.g., "Hardwood Floors", "Swimming Pool")
+   */
+  name: string;
+  /**
+   * Category of the feature
+   */
+  category: 'interior' | 'exterior' | 'community' | 'other';
+  /**
+   * Optional description of the feature
+   */
+  description?: string | null;
+  /**
+   * Optional icon name (for frontend display)
+   */
+  icon?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "properties".
+ */
+export interface Property {
+  id: number;
+  title: string;
+  /**
+   * Price in USD
+   */
+  price: number;
+  listingStatus: 'for-sale' | 'offer-pending' | 'under-contract' | 'sold' | 'not-for-sale';
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  address: {
+    street: string;
+    /**
+     * Select a ZIP code for this property
+     */
+    zipCode: number | Zipcode;
+  };
+  /**
+   * Latitude and longitude for map display
+   */
+  coordinates: {
+    /**
+     * Latitude (-90 to 90)
+     */
+    latitude: number;
+    /**
+     * Longitude (-180 to 180)
+     */
+    longitude: number;
+  };
+  details: {
+    bedrooms: number;
+    bathrooms: number;
+    squareFeet: number;
+    propertyType: 'single-family' | 'condo' | 'townhouse' | 'multi-family' | 'land' | 'commercial';
+    lotSize?: string | null;
+    yearBuilt?: number | null;
+    heating?: ('central' | 'radiator' | 'baseboard' | 'forced-air' | 'heat-pump' | 'none') | null;
+  };
+  /**
+   * Select interior features of this property
+   */
+  interiorFeatures?: (number | Feature)[] | null;
+  /**
+   * Select exterior features of this property
+   */
+  exteriorFeatures?: (number | Feature)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -201,6 +297,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'zipcodes';
         value: number | Zipcode;
+      } | null)
+    | ({
+        relationTo: 'features';
+        value: number | Feature;
+      } | null)
+    | ({
+        relationTo: 'properties';
+        value: number | Property;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -290,6 +394,55 @@ export interface ZipcodesSelect<T extends boolean = true> {
   latitude?: T;
   longitude?: T;
   est_population?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "features_select".
+ */
+export interface FeaturesSelect<T extends boolean = true> {
+  name?: T;
+  category?: T;
+  description?: T;
+  icon?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "properties_select".
+ */
+export interface PropertiesSelect<T extends boolean = true> {
+  title?: T;
+  price?: T;
+  listingStatus?: T;
+  description?: T;
+  address?:
+    | T
+    | {
+        street?: T;
+        zipCode?: T;
+      };
+  coordinates?:
+    | T
+    | {
+        latitude?: T;
+        longitude?: T;
+      };
+  details?:
+    | T
+    | {
+        bedrooms?: T;
+        bathrooms?: T;
+        squareFeet?: T;
+        propertyType?: T;
+        lotSize?: T;
+        yearBuilt?: T;
+        heating?: T;
+      };
+  interiorFeatures?: T;
+  exteriorFeatures?: T;
   updatedAt?: T;
   createdAt?: T;
 }
