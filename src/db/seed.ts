@@ -9,7 +9,7 @@ import { seedProperties } from './seeders/properties'
 async function main() {
   console.log(`\n== Seeding database ==\n`)
 
-  const db = drizzle(process.env.DATABASE_URI!)
+  const db = drizzle(process.env.DATABASE_URI + '_31'!)
 
   const payload = await getPayload({ config })
 

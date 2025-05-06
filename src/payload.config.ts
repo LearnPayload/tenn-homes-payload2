@@ -15,6 +15,8 @@ import { Features } from './config/collections/Features/Features'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+const DATABASE_URL = process.env.DATABASE_URI + '_31'
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -30,7 +32,7 @@ export default buildConfig({
   },
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || '',
+      connectionString: DATABASE_URL,
     },
   }),
   sharp,
