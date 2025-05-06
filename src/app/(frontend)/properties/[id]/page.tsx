@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { PropertyWithAddress } from '@/config/collections/Properties/Properties'
+import { Property, Location } from '@/payload-types'
 import { headers } from 'next/headers'
 import { notFound } from 'next/navigation'
 
-async function fetchProperty(id: string) {
+async function fetchProperty(id: string): Promise<Property | undefined> {
   const res = await fetch(`http://localhost:3000/api/properties/${id}`, {
     headers: await headers(),
   })
@@ -13,13 +13,13 @@ async function fetchProperty(id: string) {
 
 export default async function PropertiesPage({ params }: { params: { id: string } }) {
   const { id } = await params
-  const property = (await fetchProperty(id)) as PropertyWithAddress
-
-  console.log({ property })
+  const property = await fetchProperty(id)
 
   if (!property) {
     return notFound()
   }
+
+  const location = property.address.location as Location
 
   return (
     <div className="w-screen p-12 flex justify-center bg-accent text-sm">
@@ -31,9 +31,9 @@ export default async function PropertiesPage({ params }: { params: { id: string 
           <CardContent className="flex flex-col gap-2">
             <div className="flex flex-row gap-1">
               <p>{property.address.street},</p>
-              <p>{property.address.city}</p>
-              <p>{property.address.state_abbr},</p>
-              <p>{property.address.zip}</p>
+              <p>{location.city}</p>
+              <p>{location.state_abbr},</p>
+              <p>{location.zip}</p>
             </div>
             <div className="flex flex-row gap-3">
               <h3 className="font-bold">Features</h3>

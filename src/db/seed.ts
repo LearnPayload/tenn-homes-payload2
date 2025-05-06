@@ -3,8 +3,9 @@ import { reset } from 'drizzle-seed'
 
 import { getPayload } from 'payload'
 import config from '../payload.config'
-import { seedZipCodes } from './seeders/zipcodes'
+import { seedLocations } from './seeders/locations'
 import { seedFeatures } from './seeders/features'
+import { seedProperties } from './seeders/properties'
 async function main() {
   console.log(`\n== Seeding database ==\n`)
 
@@ -15,11 +16,14 @@ async function main() {
   console.log(`\n[Resetting database...]`)
   await reset(db, payload.db.schema)
 
-  console.log(`\n[Seeding zip codes...]\n`)
-  await seedZipCodes(payload)
+  console.log(`\n[Seeding locations...]\n`)
+  await seedLocations(payload)
 
   console.log(`\n[Seeding features...]\n`)
   await seedFeatures(payload)
+
+  console.log(`\n[Seeding properties...]\n`)
+  await seedProperties(payload)
 }
 
 main()
