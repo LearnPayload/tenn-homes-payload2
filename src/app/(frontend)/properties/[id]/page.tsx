@@ -23,6 +23,7 @@ export default async function PropertiesPage({ params }: { params: { id: string 
   }
 
   const address = property.address
+  const fullAddress = property.formattedAddress
 
   return (
     <div className="w-screen p-12 flex justify-center bg-accent text-sm">
@@ -32,13 +33,10 @@ export default async function PropertiesPage({ params }: { params: { id: string 
             <CardTitle className="text-xl font-semibold">{property.title}</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-2">
-            <p>{address.formatted},</p>
-            <div className="flex flex-row gap-1">
-              <p>{address.street},</p>
-              <p>{address.city}</p>
-              <p>{address.state_abbr},</p>
-              <p>{address.zip}</p>
-            </div>
+            <p>
+              Full address: <code className="text-sm bg-accent">{fullAddress}</code>
+            </p>
+
             <div className="flex flex-row gap-3">
               <h3 className="font-bold">Features</h3>
               <ul>

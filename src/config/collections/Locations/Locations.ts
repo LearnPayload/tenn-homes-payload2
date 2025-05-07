@@ -1,5 +1,12 @@
-import type { CollectionConfig } from 'payload'
-//id,code,city,state_abbr,state_name,county,latitude,longitude,est_population
+import { JSONSchema4 } from 'json-schema'
+import type { CollectionConfig, FieldHook } from 'payload'
+
+const formatLocation: FieldHook = async ({ data }) => {
+  if (!data) return null
+
+  return `${data.city}, ${data.state_abbr} ${data.zip}`
+}
+
 export const Locations: CollectionConfig = {
   slug: 'locations',
   labels: {
@@ -7,9 +14,32 @@ export const Locations: CollectionConfig = {
     plural: 'Locations',
   },
   admin: {
-    useAsTitle: 'zip',
+    useAsTitle: 'formattedLocation',
+    defaultColumns: ['formattedLocation', 'county', 'est_population'],
+    listSearchableFields: ['city', 'state_abbr', 'zip', 'county'],
   },
   fields: [
+    {
+      name: 'formattedLocation',
+      type: 'text',
+      label: 'Location',
+      typescriptSchema: [
+        () => {
+          const address: JSONSchema4 = {
+            type: 'string',
+            title: 'Location',
+          }
+
+          return address
+        },
+      ],
+      admin: {
+        hidden: true,
+      },
+      hooks: {
+        afterRead: [formatLocation],
+      },
+    },
     {
       name: 'zip',
       type: 'text',

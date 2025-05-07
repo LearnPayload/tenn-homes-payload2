@@ -6,6 +6,8 @@
  * and re-run `payload generate:types` to regenerate this file.
  */
 
+export type Location1 = string;
+export type FormattedAddress = string;
 /**
  * Supported timezones in IANA format.
  *
@@ -161,6 +163,7 @@ export interface Media {
  */
 export interface Location {
   id: number;
+  formattedLocation?: Location1;
   zip?: string | null;
   /**
    * City of the zip code
@@ -195,6 +198,7 @@ export interface Property {
   id: number;
   title: string;
   street: string;
+  formattedAddress?: FormattedAddress;
   address?: Address;
   /**
    * Select a location for this property.
@@ -215,7 +219,6 @@ export interface Address {
   state?: string;
   state_abbr?: string;
   zip?: string;
-  formatted?: string;
   [k: string]: unknown;
 }
 /**
@@ -339,6 +342,7 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "locations_select".
  */
 export interface LocationsSelect<T extends boolean = true> {
+  formattedLocation?: T;
   zip?: T;
   city?: T;
   state_abbr?: T;
@@ -357,6 +361,7 @@ export interface LocationsSelect<T extends boolean = true> {
 export interface PropertiesSelect<T extends boolean = true> {
   title?: T;
   street?: T;
+  formattedAddress?: T;
   address?: T;
   location?: T;
   price?: T;
