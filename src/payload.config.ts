@@ -9,13 +9,13 @@ import sharp from 'sharp'
 
 import { Users } from './config/collections/Users/Users'
 import { Media } from './config/collections/Media/Media'
-import { ZipCodes } from './config/collections/ZipCodes/ZipCodes'
+import { Locations } from './config/collections/Locations/Locations'
 import { Properties } from './config/collections/Properties/Properties'
 import { Features } from './config/collections/Features/Features'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-const DATABASE_URL = process.env.DATABASE_URI + '_30'
+const DATABASE_URL = process.env.DATABASE_URI + '_30d'
 
 export default buildConfig({
   admin: {
@@ -24,7 +24,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, ZipCodes, Properties, Features],
+  collections: [Users, Media, Locations, Properties, Features],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

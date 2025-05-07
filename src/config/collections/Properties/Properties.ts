@@ -1,14 +1,5 @@
-import { Property, Zipcode } from '@/payload-types'
+import type { JSONSchema4 } from 'json-schema'
 import type { CollectionConfig } from 'payload'
-export interface PropertyWithAddress extends Property {
-  address: {
-    street: string
-    city: string
-    state_abbr: string
-    state_name: string
-    zip: string
-  }
-}
 
 export const Properties: CollectionConfig = {
   slug: 'properties',
@@ -29,13 +20,40 @@ export const Properties: CollectionConfig = {
       label: 'Street Address',
     },
     {
-      name: 'zipcode',
+      name: 'address',
+      type: 'text',
+      typescriptSchema: [
+        () => {
+          const address: JSONSchema4 = {
+            type: 'object',
+            title: 'Address',
+            properties: {
+              street: { type: 'string' },
+              city: { type: 'string' },
+              state: { type: 'string' },
+              state_abbr: { type: 'string' },
+              zip: { type: 'string' },
+              formatted: { type: 'string' },
+            },
+            required: true,
+          }
+
+          return address
+        },
+      ],
+      admin: {
+        hidden: true,
+      },
+    },
+    {
+      name: 'location',
       type: 'relationship',
-      relationTo: 'zipcodes',
+      relationTo: 'locations',
       required: true,
       hasMany: false,
+      maxDepth: 2,
       admin: {
-        description: 'Select a ZIP code for this property.',
+        description: 'Select a location for this property.',
       },
     },
     {
@@ -81,22 +99,19 @@ export const Properties: CollectionConfig = {
   ],
   hooks: {
     afterRead: [
-      async ({ doc }) => {
-        const zipcode = doc.zipcode as Zipcode
-        const address = {
-          street: doc.street!,
-          city: zipcode.city!,
-          state_abbr: zipcode.state_abbr!,
-          state_name: zipcode.state_name!,
-          zip: zipcode.code!,
-        }
-        doc.address = address
-        const docWithAddress = {
+      ({ doc }) => {
+        if (!doc) return
+        return {
           ...doc,
-          address,
-        } as PropertyWithAddress
-
-        return docWithAddress
+          address: {
+            street: doc.street,
+            city: doc.location.city,
+            state_abbr: doc.location.state_abbr,
+            state: doc.location.state_name,
+            zip: doc.location.zip,
+            formatted: `${doc.street}, ${doc.location.city}, ${doc.location.state_abbr} ${doc.location.zip}`,
+          },
+        }
       },
     ],
   },

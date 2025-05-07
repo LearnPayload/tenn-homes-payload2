@@ -69,7 +69,7 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
-    zipcodes: Zipcode;
+    locations: Location;
     properties: Property;
     features: Feature;
     'payload-locked-documents': PayloadLockedDocument;
@@ -80,7 +80,7 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    zipcodes: ZipcodesSelect<false> | ZipcodesSelect<true>;
+    locations: LocationsSelect<false> | LocationsSelect<true>;
     properties: PropertiesSelect<false> | PropertiesSelect<true>;
     features: FeaturesSelect<false> | FeaturesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -157,11 +157,11 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "zipcodes".
+ * via the `definition` "locations".
  */
-export interface Zipcode {
+export interface Location {
   id: number;
-  code?: string | null;
+  zip?: string | null;
   /**
    * City of the zip code
    */
@@ -195,10 +195,11 @@ export interface Property {
   id: number;
   title: string;
   street: string;
+  address?: Address;
   /**
-   * Select a ZIP code for this property.
+   * Select a location for this property.
    */
-  zipcode: number | Zipcode;
+  location: number | Location;
   price?: number | null;
   listingStatus: 'forsale' | 'pending' | 'contract' | 'sold' | 'notforsale';
   /**
@@ -207,6 +208,15 @@ export interface Property {
   features?: (number | Feature)[] | null;
   updatedAt: string;
   createdAt: string;
+}
+export interface Address {
+  street?: string;
+  city?: string;
+  state?: string;
+  state_abbr?: string;
+  zip?: string;
+  formatted?: string;
+  [k: string]: unknown;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -238,8 +248,8 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
-        relationTo: 'zipcodes';
-        value: number | Zipcode;
+        relationTo: 'locations';
+        value: number | Location;
       } | null)
     | ({
         relationTo: 'properties';
@@ -326,10 +336,10 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "zipcodes_select".
+ * via the `definition` "locations_select".
  */
-export interface ZipcodesSelect<T extends boolean = true> {
-  code?: T;
+export interface LocationsSelect<T extends boolean = true> {
+  zip?: T;
   city?: T;
   state_abbr?: T;
   state_name?: T;
@@ -347,7 +357,8 @@ export interface ZipcodesSelect<T extends boolean = true> {
 export interface PropertiesSelect<T extends boolean = true> {
   title?: T;
   street?: T;
-  zipcode?: T;
+  address?: T;
+  location?: T;
   price?: T;
   listingStatus?: T;
   features?: T;

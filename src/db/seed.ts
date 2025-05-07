@@ -3,20 +3,20 @@ import { reset } from 'drizzle-seed'
 
 import { getPayload } from 'payload'
 import config from '../payload.config'
-import { seedZipCodes } from './seeders/zipcodes'
+import { seedLocations } from './seeders/locations'
 import { seedFeatures } from './seeders/features'
 async function main() {
   console.log(`\n== Seeding database ==\n`)
 
-  const db = drizzle(process.env.DATABASE_URI + '_30'!)
+  const db = drizzle(process.env.DATABASE_URI + '_30d'!)
 
   const payload = await getPayload({ config })
 
   console.log(`\n[Resetting database...]`)
   await reset(db, payload.db.schema)
 
-  console.log(`\n[Seeding zip codes...]\n`)
-  await seedZipCodes(payload)
+  console.log(`\n[Seeding locations...]\n`)
+  await seedLocations(payload)
 
   console.log(`\n[Seeding features...]\n`)
   await seedFeatures(payload)
