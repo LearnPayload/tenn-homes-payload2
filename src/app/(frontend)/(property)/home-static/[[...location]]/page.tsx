@@ -67,7 +67,7 @@ export default function PropertyGallery() {
     <div className="w-full flex flex-col gap-4">
       <div className="relative">
         {/* Main gallery with CSS Grid that changes based on screen size */}
-        <div className="grid grid-cols-12 grid-rows-1 gap-1  max-h-[520px] xl:max-h-[680px]">
+        <div className="grid grid-cols-12 grid-rows-1 gap-1  max-h-[520px]">
           {/* Feature image - always visible */}
           <img
             src={featureImage.url}
@@ -308,7 +308,6 @@ export default function PropertyGallery() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   )
 }
