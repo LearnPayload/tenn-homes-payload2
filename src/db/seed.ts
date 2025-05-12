@@ -10,7 +10,7 @@ import { seedUsers } from './seeders/users'
 async function main() {
   console.log(`\n== Seeding database ==\n`)
 
-  const db = drizzle(process.env.DATABASE_URI + '_pdp'!)
+  const db = drizzle(process.env.DATABASE_URI + '_pdp_static'!)
 
   const payload = await getPayload({ config })
 
