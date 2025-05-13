@@ -195,8 +195,12 @@ export interface Location {
  * via the `definition` "properties".
  */
 export interface Property {
-  id: number;
+  id: string;
   title: string;
+  description: string;
+  price?: number | null;
+  listingStatus: 'forsale' | 'pending' | 'contract' | 'contingent' | 'sold' | 'offmarket' | 'notforsale';
+  photos?: (number | Media)[] | null;
   street: string;
   formattedAddress?: FormattedAddress;
   address?: Address;
@@ -204,8 +208,6 @@ export interface Property {
    * Select a location for this property.
    */
   location: number | Location;
-  price?: number | null;
-  listingStatus: 'forsale' | 'pending' | 'contract' | 'sold' | 'notforsale';
   /**
    * Select the features for this property.
    */
@@ -256,7 +258,7 @@ export interface PayloadLockedDocument {
       } | null)
     | ({
         relationTo: 'properties';
-        value: number | Property;
+        value: string | Property;
       } | null)
     | ({
         relationTo: 'features';
@@ -359,13 +361,16 @@ export interface LocationsSelect<T extends boolean = true> {
  * via the `definition` "properties_select".
  */
 export interface PropertiesSelect<T extends boolean = true> {
+  id?: T;
   title?: T;
+  description?: T;
+  price?: T;
+  listingStatus?: T;
+  photos?: T;
   street?: T;
   formattedAddress?: T;
   address?: T;
   location?: T;
-  price?: T;
-  listingStatus?: T;
   features?: T;
   updatedAt?: T;
   createdAt?: T;

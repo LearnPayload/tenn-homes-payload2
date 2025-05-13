@@ -1,0 +1,50 @@
+#field-photos {
+  .upload.upload--has-many__draggable-rows {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .thumbnail.thumbnail--size-small.upload-relationship-details__thumbnail {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+  }
+
+  .upload-relationship-details__details {
+    display: none;
+  }
+
+  .upload-field-card {
+    position: relative;
+    padding: 0;
+    width: 180px;
+    height: 180px;
+    overflow: hidden;
+    border: 0;
+  }
+
+  .upload-relationship-details__actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-bottom-left-radius: 0.5rem;
+  }
+
+  .upload--has-many__drag {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-bottom-right-radius: 0.5rem;
+    svg {
+      width: 24px;
+      height: 24px;
+      color: #000;
+    }
+  }
+}

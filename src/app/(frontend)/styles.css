@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -115,6 +115,35 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-gray-100 text-foreground;
   }
+}
+
+@theme {
+  --breakpoint-tablet: 40rem;
+  --breakpoint-laptop: 64rem;
+  --breakpoint-desktop: 80rem;
+  --breakpoint-large: 89rem;
+  /* Aliases */
+
+  --breakpoint-macbook-air: var(--breakpoint-desktop);
+  --breakpoint-macbook-pro: var(--breakpoint-large);
+}
+
+@theme {
+  /* status colors */
+  --color-status-forsale: oklch(0.65 0.1653 146.12);
+  --color-status-forsale-foreground: oklch(0.95 0.0296 146.12);
+  --color-status-pending: oklch(0.72 0.1505 64.59);
+  --color-status-pending-foreground: oklch(0.96 0.0321 64.59);
+  --color-status-contract: oklch(0.58 0.14 240);
+  --color-status-contract-foreground: oklch(0.95 0.0148 240);
+  --color-status-contingent: oklch(0.62 0.2129 31.2);
+  --color-status-contingent-foreground: oklch(0.95 0.0148 31.2);
+  --color-status-sold: oklch(0.52 0.1545 252.87);
+  --color-status-sold-foreground: oklch(0.95 0.0148 252.87);
+  --color-status-offmarket: oklch(0.52 0.1545 252.87);
+  --color-status-offmarket-foreground: oklch(0.95 0.0148 252.87);
+  --color-status-notforsale: oklch(0.83 0.0148 146.12);
+  --color-status-notforsale-foreground: oklch(0.33 0.0469 146.12);
 }

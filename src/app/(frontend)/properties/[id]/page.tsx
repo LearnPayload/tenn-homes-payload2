@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Property } from '@/models/property'
 
-import { Property, Location } from '@/payload-types'
+import { Property as PropertyType } from '@/payload-types'
 import { headers } from 'next/headers'
 import { notFound } from 'next/navigation'
 
@@ -14,15 +15,14 @@ async function fetchProperty(id: string) {
 
 export default async function PropertiesPage({ params }: { params: { id: string } }) {
   const { id } = await params
-  const property = (await fetchProperty(id)) as Property
+  const data = (await fetchProperty(id)) as PropertyType
 
-  console.log({ property })
-
-  if (!property || !property.address) {
+  if (!data) {
     return notFound()
   }
 
-  const address = property.address
+  const property = new Property(data)
+  console.log({ property })
   const fullAddress = property.formattedAddress
 
   return (
@@ -36,6 +36,8 @@ export default async function PropertiesPage({ params }: { params: { id: string 
             <p>
               Full address: <code className="text-sm bg-accent">{fullAddress}</code>
             </p>
+
+            <p>URL: {property.url}</p>
 
             <div className="flex flex-row gap-3">
               <h3 className="font-bold">Features</h3>
