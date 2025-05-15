@@ -7,6 +7,16 @@ import { PropertyMap } from '@/components/property/map'
 import { PropertyOverview } from '@/components/property/overview'
 import { repository } from '@/repositories'
 
+export async function generateMetadata({ params }: { params: Promise<{ routePath: string[] }> }) {
+  const { routePath } = await params
+  const propertyId = routePath[routePath.length - 1]
+  const property = await repository.getProperty(propertyId)
+  return {
+    title: property.title,
+    description: property.description,
+  }
+}
+
 export default async function PropertyDetailPage({
   params,
 }: {

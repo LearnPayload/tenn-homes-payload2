@@ -16,12 +16,10 @@ import { Input } from '@/components/ui/input'
 import { FixedHeader } from '../_layouts/fixed-header'
 import { Footer } from '../_layouts/footer'
 import Link from 'next/link'
-import { FeaturedPropertyCard } from '@/components/property/feartured-property-card'
-import { repository } from '@/repositories'
+import { FeaturedProperties } from '@/blocks/featured-properties'
 const company_name = 'Tenn Homes'
 
 export default async function HomePage() {
-  const properties = await repository.getProperties()
   return (
     <div className="flex min-h-screen flex-col">
       <FixedHeader />
@@ -77,26 +75,7 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* Featured Properties */}
-        <section className="py-16 bg-accent text-accent-foreground">
-          <div className="container mx-auto px-4">
-            <div className="flex justify-between items-center mb-8">
-              <div>
-                <h2 className="text-3xl font-bold">Featured Properties in East Tennessee</h2>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-4 gap-6">
-              {properties.map((property) => {
-                return (
-                  <Link href={property.url} key={property.id} className="group block relative">
-                    <FeaturedPropertyCard property={property} />
-                  </Link>
-                )
-              })}
-            </div>
-          </div>
-        </section>
+        <FeaturedProperties />
 
         {/* Property Types */}
         <section className="py-16 bg-white">
