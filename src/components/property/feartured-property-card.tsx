@@ -1,11 +1,10 @@
-import { Property } from '@/models/property'
+import { DecoratedProperty, PropertyDecorator } from '@/repositories/property-decorator'
 import { Card, CardContent } from '../ui/card'
 import { PropertyStatus } from './status'
-import Image from 'next/image'
 import { Media } from '@/payload-types'
 import { MapPin } from 'lucide-react'
 
-export const FeaturedPropertyCard = ({ property }: { property: Property }) => {
+export const FeaturedPropertyCard = ({ property }: { property: DecoratedProperty }) => {
   const images = property?.photos as Media[]
   const featureImage = images[0] ?? { url: 'https://placehold.co/600x400', alt: property.title }
   return (

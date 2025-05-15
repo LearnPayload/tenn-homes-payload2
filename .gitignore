@@ -42,3 +42,4 @@ next-env.d.ts
 .env
 
 /media
+/media_source

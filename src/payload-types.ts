@@ -125,6 +125,7 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
+  role: 'admin' | 'user' | 'agent';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -195,21 +196,7 @@ export interface Location {
 export interface Property {
   id: string;
   title: string;
-  description: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
+  description: string;
   price?: number | null;
   listingStatus: 'forsale' | 'pending' | 'contract' | 'contingent' | 'sold' | 'offmarket' | 'notforsale';
   details?: {
@@ -326,6 +313,7 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  role?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;

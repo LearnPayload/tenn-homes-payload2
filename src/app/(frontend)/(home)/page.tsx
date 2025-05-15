@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { MapPin, Star } from 'lucide-react'
+import { Star } from 'lucide-react'
 import Hero from '@/app/(frontend)/(home)/_components/hero'
 import singleFamilyHomeKnoxville from '@/assets/knoxville-single-family.png'
 import villaHomeKnoxville from '@/assets/villa.png'
@@ -15,22 +15,13 @@ import condo from '@/assets/condo.png'
 import { Input } from '@/components/ui/input'
 import { FixedHeader } from '../_layouts/fixed-header'
 import { Footer } from '../_layouts/footer'
-import { getPayloadClient } from '@/db/client'
-import { Property } from '@/models/property'
 import Link from 'next/link'
-import { PropertyStatus } from '@/components/property/status'
 import { FeaturedPropertyCard } from '@/components/property/feartured-property-card'
-
+import { repository } from '@/repositories'
 const company_name = 'Tenn Homes'
 
 export default async function HomePage() {
-  const payload = await getPayloadClient()
-  const data = await payload.find({
-    collection: 'properties',
-    limit: 4,
-  })
-
-  const properties = data.docs.map((doc) => new Property(doc))
+  const properties = await repository.getProperties()
   return (
     <div className="flex min-h-screen flex-col">
       <FixedHeader />

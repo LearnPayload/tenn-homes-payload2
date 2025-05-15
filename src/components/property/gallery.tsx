@@ -2,20 +2,47 @@
 
 import { Media } from '@/payload-types'
 import { useProperty } from './context'
+import photoPlaceholder from '@/assets/photo-placeholder.png'
 
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import { DecoratedPhoto } from '@/repositories/property-decorator'
 
 export const PropertyGallery = () => {
   const property = useProperty()
+  const photos = (property?.photos as Media[]) ?? []
 
-  const images = property?.photos as Media[]
+  const images: DecoratedPhoto[] = Array(7)
+    .fill(null)
+    .map((_, index) => {
+      if (!photos[index])
+        return {
+          id: `missing-${index + 1}`,
+          url: null,
+          alt: 'Missing Image',
+        }
+      return {
+        id: photos[index].id.toString(),
+        url: photos[index].url!,
+        alt: photos[index].alt,
+      }
+    })
 
   // Feature image is the first one
   const featureImage = images[0]
+
   // Grid images are all remaining images (index 1 and beyond)
   const gridImages = images.slice(1, 7)
+
   return (
     <Dialog>
+      <DialogTitle className="sr-only">{property?.title}</DialogTitle>
+      <DialogDescription className="sr-only">{property?.description}</DialogDescription>
       <div className="relative">
         {/* Main gallery with CSS Grid that changes based on screen size */}
         <div className="grid grid-cols-12 grid-rows-1 gap-1  max-h-[520px] 2xl:max-h-[680px]">
@@ -47,13 +74,26 @@ export const PropertyGallery = () => {
                 visibilityClass = 'hidden large:block'
               }
 
-              if (!image.url) return null
+              if (!image.url) {
+                return (
+                  <img
+                    key={`${image.id}-${index}`}
+                    src={photoPlaceholder.src}
+                    alt={'No image available'}
+                    width={50}
+                    height={500}
+                    className={`w-full h-full object-cover photo-${image.id} ${visibilityClass}`}
+                  />
+                )
+              }
 
               return (
                 <DialogTrigger key={image.id} asChild>
                   <img
-                    src={image.url}
-                    alt={image.alt}
+                    src={image.url ?? ''}
+                    alt={image.alt ?? ''}
+                    width={50}
+                    height={500}
                     className={`w-full h-full object-cover cursor-pointer photo-${image.id} ${visibilityClass}`}
                   />
                 </DialogTrigger>
@@ -66,15 +106,18 @@ export const PropertyGallery = () => {
         <div className="absolute inset-0 h-full w-full sm:p-6">
           <div className="bg-background sm:rounded-lg h-full w-full overflow-y-scroll p-4">
             <div className="mx-auto max-w-7xl">
-              {images.map((image) => {
-                return (
-                  <img
-                    src={image.url ?? ''}
-                    alt={image.alt ?? ''}
-                    className="w-full h-full object-cover"
-                  />
-                )
-              })}
+              {images
+                .filter((p) => !!p.url)
+                .map((image, index) => {
+                  return (
+                    <img
+                      key={`${image.id}-${index}`}
+                      src={image.url ?? ''}
+                      alt={image.alt ?? ''}
+                      className="w-full h-full object-cover"
+                    />
+                  )
+                })}
             </div>
           </div>
         </div>

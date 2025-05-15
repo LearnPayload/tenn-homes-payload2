@@ -16,6 +16,12 @@ export async function seedProperties(payload: Payload): Promise<void> {
     limit: 100,
   })
 
+  // Get all media to randomly assign to properties
+  const media = await payload.find({
+    collection: 'media',
+    limit: 100,
+  })
+
   const titleAdjectives = [
     'Modern',
     'Suburban',
@@ -61,30 +67,7 @@ export async function seedProperties(payload: Payload): Promise<void> {
       const title = `${faker.helpers.arrayElement(titleAdjectives)} ${faker.helpers.arrayElement(titleNouns)} in the ${faker.helpers.arrayElement(titleRegions)}`
       return {
         title,
-        description: {
-          root: {
-            type: 'root',
-            children: [
-              {
-                type: 'paragraph',
-                version: 1,
-                children: [
-                  {
-                    type: 'text',
-                    text: faker.helpers
-                      .multiple(() => faker.lorem.sentence(), { count: { min: 3, max: 8 } })
-                      .join(' '),
-                    version: 1,
-                  },
-                ],
-              },
-            ],
-            direction: 'ltr',
-            format: 'left',
-            indent: 0,
-            version: 1,
-          },
-        },
+        description: faker.lorem.paragraph(),
         street,
         location: location.id,
         address: {
@@ -118,6 +101,13 @@ export async function seedProperties(payload: Payload): Promise<void> {
           lotSize: faker.number.int({ min: 0, max: 10 }),
           yearBuilt: faker.number.int({ min: 1900, max: 2024 }),
         },
+        photos: faker.helpers.arrayElements(
+          media.docs.map((photo) => photo.id),
+          {
+            min: 5,
+            max: 10,
+          },
+        ),
       }
     },
   )

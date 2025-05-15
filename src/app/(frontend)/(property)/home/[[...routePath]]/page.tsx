@@ -5,28 +5,19 @@ import { PropertyFeatures } from '@/components/property/features'
 import { PropertyGallery } from '@/components/property/gallery'
 import { PropertyMap } from '@/components/property/map'
 import { PropertyOverview } from '@/components/property/overview'
-import { getPayloadClient } from '@/db/client'
-
-import { notFound } from 'next/navigation'
+import { repository } from '@/repositories'
 
 export default async function PropertyDetailPage({
   params,
 }: {
-  params: Promise<{ location: string[] }>
+  params: Promise<{ routePath: string[] }>
 }) {
-  const { location } = await params
-  const propertyId = location[location.length - 1]
-  const payload = await getPayloadClient()
-  const data = await payload.findByID({
-    collection: 'properties',
-    id: propertyId,
-  })
-  if (!data) {
-    return notFound()
-  }
+  const { routePath } = await params
+  const propertyId = routePath[routePath.length - 1]
+  const property = await repository.getProperty(propertyId)
 
   return (
-    <PropertyProvider data={data}>
+    <PropertyProvider property={property}>
       <div className="w-full flex flex-col">
         <PropertyGallery />
         <div className="max-w-7xl p-4  w-full mx-auto grid grid-cols-12 gap-4">

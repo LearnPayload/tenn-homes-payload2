@@ -1,25 +1,22 @@
 'use client'
-import { Property } from '@/models/property'
-import { Property as PropertyType } from '@/payload-types'
-
+import { DecoratedProperty } from '@/repositories/property-decorator'
 import { createContext, useContext } from 'react'
 
-export const PropertyContext = createContext<PropertyType | null>(null)
+export const PropertyContext = createContext<DecoratedProperty | null>(null)
 
 export const PropertyProvider = ({
   children,
-  data,
+  property,
 }: {
   children: React.ReactNode
-  data: PropertyType
+  property: DecoratedProperty
 }) => {
-  return <PropertyContext.Provider value={data}>{children}</PropertyContext.Provider>
+  return <PropertyContext.Provider value={property}>{children}</PropertyContext.Provider>
 }
 
 export const useProperty = () => {
   const context = useContext(PropertyContext)
   if (!context) throw new Error('useProperty must be used within a PropertyProvider')
-  const property = new Property(context)
 
-  return property
+  return context
 }

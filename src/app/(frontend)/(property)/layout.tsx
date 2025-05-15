@@ -3,7 +3,7 @@ import { Header } from '../_layouts/header'
 
 export default function PropertyLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
+    <div className="h-screen flex flex-col justify-between">
       <div className="bg-white">
         <Header />
       </div>
