@@ -6,6 +6,7 @@ import type { CollectionConfig, PayloadRequest } from 'payload'
 import type { Location } from '@/payload-types'
 import type { JSONSchema4 } from 'json-schema'
 import { listingStatusOptions } from './listing-status-map'
+import { customPrimaryKey } from '@/config/helpers/custom-primary-key'
 
 const formatAddress: AfterReadHook = async ({ doc }) => {
   return {
@@ -48,17 +49,7 @@ export const Properties: CollectionConfig = {
   },
 
   fields: [
-    {
-      name: 'id',
-      type: 'text',
-      required: true,
-      unique: true,
-      admin: {
-        disabled: true,
-      },
-      defaultValue: generatePrimaryKey.bind(null, 8),
-    },
-
+    ...customPrimaryKey,
     {
       type: 'tabs',
       tabs: [
@@ -185,6 +176,15 @@ export const Properties: CollectionConfig = {
           ],
         },
       ],
+    },
+    {
+      name: 'agent',
+      type: 'relationship',
+      relationTo: 'agents',
+      hasMany: false,
+      admin: {
+        position: 'sidebar',
+      },
     },
   ],
   hooks: {

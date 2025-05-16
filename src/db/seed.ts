@@ -6,14 +6,18 @@ import { seedUsers } from './seeders/users'
 import { seedMedia } from './seeders/media'
 import { getPayloadClient } from './client'
 import { reset } from 'drizzle-seed'
+import { seedAgents } from './seeders/agents'
+import { DATABASE_URL } from '@/config/env'
+import { sql } from 'drizzle-orm'
 
 async function main() {
   console.log(`\n== Seeding database ==\n`)
 
-  const payload = await getPayloadClient()
   console.log(`\n[Resetting database...]`)
-  const db = drizzle(payload.db.poolOptions.connectionString!)
-  await reset(db, payload.db.schema)
+  const db = drizzle(DATABASE_URL)
+  const payload = await getPayloadClient()
+  const schema = payload.db.schema
+  await reset(db, schema)
 
   console.log(`\n[Seeding media...]\n`)
   await seedMedia(payload)
@@ -26,6 +30,9 @@ async function main() {
 
   console.log(`\n[Seeding features...]\n`)
   await seedFeatures(payload)
+
+  console.log(`\n[Seeding agents...]\n`)
+  await seedAgents(payload)
 
   console.log(`\n[Seeding properties...]\n`)
   await seedProperties(payload)

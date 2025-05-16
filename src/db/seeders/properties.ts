@@ -22,6 +22,11 @@ export async function seedProperties(payload: Payload): Promise<void> {
     limit: 100,
   })
 
+  const agents = await payload.find({
+    collection: 'agents',
+    limit: 100,
+  })
+
   const titleAdjectives = [
     'Modern',
     'Suburban',
@@ -108,6 +113,7 @@ export async function seedProperties(payload: Payload): Promise<void> {
             max: 10,
           },
         ),
+        agent: faker.helpers.arrayElement(agents.docs).id,
       }
     },
   )

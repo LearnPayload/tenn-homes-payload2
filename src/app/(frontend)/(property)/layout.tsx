@@ -1,5 +1,6 @@
 import { Footer } from '../_layouts/footer'
 import { Header } from '../_layouts/header'
+import { PayloadAdminBar } from '@payloadcms/admin-bar'
 
 export default function PropertyLayout({ children }: { children: React.ReactNode }) {
   return (
