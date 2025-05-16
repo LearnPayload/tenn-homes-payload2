@@ -1,5 +1,3 @@
-import { OptionObject } from 'payload'
-
 export const listingStatusMap = {
   forsale: {
     label: 'For Sale',
@@ -34,9 +32,15 @@ export const listingStatusMap = {
   },
 } as const
 
-export const listingStatusOptions: OptionObject[] = Object.entries(listingStatusMap).map(
+export type ListingStatus = keyof typeof listingStatusMap
+export type ListingStatusOption = {
+  label: string
+  value: ListingStatus
+}
+
+export const listingStatusOptions: ListingStatusOption[] = Object.entries(listingStatusMap).map(
   ([key, value]) => ({
     label: value.label,
-    value: key,
+    value: key as ListingStatus,
   }),
 )

@@ -1,17 +1,9 @@
 'use client'
-import { Share2Icon } from 'lucide-react'
 
-import { HeartPlusIcon } from 'lucide-react'
 import { PropertyAddress } from './address'
 import { useProperty } from './context'
-import { Button } from '../ui/button'
-import {
-  listingStatusMap,
-  listingStatusOptions,
-} from '@/config/collections/Properties/listing-status-map'
-import { cn } from '@/lib/utils'
 import { PropertyStatus } from './status'
-
+import { PropertyShare } from './share'
 export const PropertyDetails = () => {
   const property = useProperty()
   return (
@@ -54,14 +46,7 @@ export const PropertyDetails = () => {
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        <div className="flex gap-2">
-          <Button variant="ghost" className="p-0 size-10">
-            <Share2Icon size={24} className="shrink-0 h-6 w-6" />
-          </Button>
-          <Button variant="ghost" className="p-0 size-10">
-            <HeartPlusIcon size={24} className="shrink-0 h-6 w-6" />
-          </Button>
-        </div>
+        <PropertyShare />
       </div>
     </div>
   )

@@ -1,4 +1,5 @@
-import { BaseRepository } from './base-repository'
-import { AddPropertyRepository } from './add-property-repository'
+import { PropertyRepository } from './property-repository'
 
-export const repository = new (AddPropertyRepository(BaseRepository))()
+export const db = {
+  properties: new PropertyRepository(),
+}

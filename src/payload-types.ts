@@ -234,6 +234,8 @@ export interface Property {
     squareFeet?: number | null;
     lotSize?: number | null;
     yearBuilt?: number | null;
+    propertyType?: ('single-family' | 'multi-family' | 'condo' | 'townhouse' | 'land' | 'mobile-home') | null;
+    heatingType?: ('central' | 'electric' | 'gas' | 'oil' | 'propane') | null;
   };
   photos?: (number | Media)[] | null;
   street: string;
@@ -543,6 +545,8 @@ export interface PropertiesSelect<T extends boolean = true> {
         squareFeet?: T;
         lotSize?: T;
         yearBuilt?: T;
+        propertyType?: T;
+        heatingType?: T;
       };
   photos?: T;
   street?: T;

@@ -1,6 +1,6 @@
 import { FeaturedPropertyCard } from '@/components/property/feartured-property-card'
 import { Link } from '@payloadcms/ui'
-import { repository } from '@/repositories'
+import { db } from '@/repositories'
 import {
   Carousel,
   CarouselContent,
@@ -10,7 +10,14 @@ import {
 } from '@/components/ui/carousel'
 
 export async function FeaturedProperties() {
-  const properties = await repository.getProperties()
+  const properties = await db.properties.getMany({
+    limit: 8,
+    where: {
+      listingStatus: {
+        equals: 'forsale',
+      },
+    },
+  })
   return (
     <section className="py-16 bg-accent text-accent-foreground">
       <div className="container mx-auto px-4">

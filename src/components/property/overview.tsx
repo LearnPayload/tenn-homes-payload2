@@ -1,7 +1,10 @@
 'use client'
+import { propertyTypeMap } from '@/config/collections/Properties/property-type-options'
+import { useProperty } from './context'
 import { PropertyDescription } from './description'
-
+import { heatingTypeMap } from '@/config/collections/Properties/heating-type-options'
 export const PropertyOverview = () => {
+  const property = useProperty()
   return (
     <div className="bg-white rounded-lg p-6">
       <div className="flex flex-col gap-6">
@@ -16,19 +19,19 @@ export const PropertyOverview = () => {
           <div className="grid grid-cols-2 gap-2">
             <div className="flex flex-col gap-1">
               <h4 className="text-base font-medium">Type</h4>
-              <p className="text-base">Single Family</p>
+              <p className="text-base">{propertyTypeMap[property.details?.propertyType]}</p>
             </div>
             <div className="flex flex-col">
               <h4 className="text-base font-medium">Year Built</h4>
-              <p className="text-base">2020</p>
+              <p className="text-base">{property.details?.yearBuilt}</p>
             </div>
             <div className="flex flex-col">
               <h4 className="text-base font-medium">Lot Size</h4>
-              <p className="text-base">1.5 acres</p>
+              <p className="text-base">{property.details?.lotSize} acres</p>
             </div>
             <div className="flex flex-col">
               <h4 className="text-base font-medium">Heating</h4>
-              <p className="text-base">Forced Air</p>
+              <p className="text-base">{heatingTypeMap[property.details?.heatingType]}</p>
             </div>
           </div>
         </div>

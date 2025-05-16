@@ -1,8 +1,13 @@
+'use client'
 import { listingStatusMap } from '@/config/collections/Properties/listing-status-map'
 import { cn } from '@/lib/utils'
-import { Property } from '@/payload-types'
+import { useProperty } from './context'
 
-export const PropertyStatus = ({ listingStatus }: { listingStatus: Property['listingStatus'] }) => {
+export const PropertyStatus = () => {
+  const property = useProperty()
+
+  const listingStatus = property.listingStatus
+  console.log({ listingStatus })
   return (
     <div
       className={cn(

@@ -7,6 +7,8 @@ import type { Location } from '@/payload-types'
 import type { JSONSchema4 } from 'json-schema'
 import { listingStatusOptions } from './listing-status-map'
 import { customPrimaryKey } from '@/config/helpers/custom-primary-key'
+import { propertyTypeOptions } from '@/config/collections/Properties/property-type-options'
+import { heatingTypeOptions } from './heating-type-options'
 
 const formatAddress: AfterReadHook = async ({ doc }) => {
   return {
@@ -99,6 +101,16 @@ export const Properties: CollectionConfig = {
                 {
                   name: 'yearBuilt',
                   type: 'number',
+                },
+                {
+                  name: 'propertyType',
+                  type: 'select',
+                  options: propertyTypeOptions,
+                },
+                {
+                  name: 'heatingType',
+                  type: 'select',
+                  options: heatingTypeOptions,
                 },
               ],
             },

@@ -1,3 +1,5 @@
+import { heatingTypeOptions } from '@/config/collections/Properties/heating-type-options'
+import { propertyTypeOptions } from '@/config/collections/Properties/property-type-options'
 import { Property } from '@/payload-types'
 import { faker } from '@faker-js/faker'
 
@@ -105,6 +107,8 @@ export async function seedProperties(payload: Payload): Promise<void> {
           squareFeet: faker.number.int({ min: 1000, max: 5000 }),
           lotSize: faker.number.int({ min: 0, max: 10 }),
           yearBuilt: faker.number.int({ min: 1900, max: 2024 }),
+          propertyType: faker.helpers.arrayElement(propertyTypeOptions).value,
+          heatingType: faker.helpers.arrayElement(heatingTypeOptions).value,
         },
         photos: faker.helpers.arrayElements(
           media.docs.map((photo) => photo.id),

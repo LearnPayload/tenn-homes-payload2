@@ -1,20 +1,19 @@
-import { DecoratedProperty, PropertyDecorator } from '@/repositories/property-decorator'
+import { DecoratedProperty } from '@/repositories/property-decorator'
+import { Where } from 'payload'
 
 interface QueryParams {
   limit?: number
   page?: number
+  where?: Where
+  sort?: string
 }
 
-export interface PropertyQueryParams extends QueryParams {
-  type?: string
-  zip?: string
-  price?: number
+export interface PropertyQueryParams extends QueryParams {}
+
+export interface BaseRepositoryInterface<T, TQueryParams extends QueryParams> {
+  getMany(params: TQueryParams): Promise<T[]>
+  getOne(id: string): Promise<T | null>
 }
 
-export interface PropertyRepository {
-  getProperties(params: PropertyQueryParams, userId?: string): Promise<DecoratedProperty[]>
-  getProperty(id: string): Promise<DecoratedProperty | null>
-  //   create(property: PropertyType): Promise<Property>
-  //   update(id: string, property: PropertyType): Promise<Property | null>
-  //   delete(id: string): Promise<boolean>
-}
+export interface PropertyRepositoryInterface
+  extends BaseRepositoryInterface<DecoratedProperty, PropertyQueryParams> {}
