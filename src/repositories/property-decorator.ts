@@ -8,6 +8,8 @@ import { ListingStatus } from '@/config/collections/Properties/listing-status-ma
 
 export type DecoratedProperty = {
   original: Property
+  title: string
+  description: string
   price: string
   address: Property['address']
   listingStatus: ListingStatus
@@ -34,6 +36,14 @@ export type DecoratedPhoto = {
 
 export class PropertyDecorator {
   constructor(readonly original: Property) {}
+
+  get title(): string {
+    return this.original.title
+  }
+
+  get description(): string {
+    return this.original.description
+  }
 
   get price(): string {
     return formatPrice(this.original.price)
@@ -101,6 +111,8 @@ export class PropertyDecorator {
 
   toJSON(): DecoratedProperty {
     return {
+      title: this.title,
+      description: this.description,
       address: this.address,
       agent: this.agent,
       price: this.price,

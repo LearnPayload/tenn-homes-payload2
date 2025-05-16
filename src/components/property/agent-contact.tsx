@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { MailIcon, PhoneCallIcon } from 'lucide-react'
 import { useProperty } from './context'
 import { Media } from '@/payload-types'
+import { ContactAgentForm } from '@/forms/contact-agent/contact-agent-form'
 
 const backgroundColors = [
   '#D8E2DC', // Ash gray
@@ -75,13 +76,7 @@ export const AgentContact = () => {
         </div>
       </div>
       <div className="flex flex-col items-center gap-2">
-        <Input placeholder="Enter your name" />
-        <Input placeholder="Enter your email" />
-        <Textarea placeholder="Enter your message" />
-
-        <Button className="w-full" size={'lg'}>
-          Send
-        </Button>
+        <ContactAgentForm />
       </div>
     </div>
   )

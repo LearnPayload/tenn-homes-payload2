@@ -6,7 +6,7 @@ export const Agents: CollectionConfig = {
   slug: 'agents',
   admin: {
     useAsTitle: 'fullName',
-    defaultColumns: ['fullName', 'email', 'phone'],
+    defaultColumns: ['profilePhoto', 'fullName', 'email', 'phone'],
   },
   auth: true,
   fields: [
