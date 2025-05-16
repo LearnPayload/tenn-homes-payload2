@@ -3,7 +3,8 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useHookFormAction } from '@next-safe-action/adapter-react-hook-form/hooks'
 import { z } from 'zod'
-import { contactAgentAction, contactAgentSchema } from './contact-agent-actions'
+import { contactAgentSchema } from './schema'
+import { contactAgentAction } from './contact-agent-actions'
 
 export const useContactAgentForm = (
   defaultValues: z.infer<typeof contactAgentSchema> = {

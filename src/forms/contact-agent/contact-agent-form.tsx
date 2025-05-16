@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Form,
   FormControl,
@@ -17,26 +19,60 @@ export const ContactAgentForm = () => {
     form,
     action: { isPending },
     handleSubmitWithAction,
-  } = useContactAgentForm()
+  } = useContactAgentForm({
+    email: 'user@example.com',
+    fullName: 'Average Joe',
+    message: 'I am interested in this property',
+  })
   return (
     <Form {...form}>
       <form onSubmit={handleSubmitWithAction} className="flex-1 w-full grid grid-cols-1 gap-2">
         <FormField
           control={form.control}
           name="fullName"
-          render={({ field }) => <Input placeholder="Enter your name" {...field} />}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="sr-only">Full Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter your name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
         <FormField
           control={form.control}
           name="email"
-          render={({ field }) => <Input placeholder="Enter your email" {...field} />}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="sr-only">Email</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter your email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
         <FormField
           control={form.control}
           name="message"
-          render={({ field }) => <Textarea placeholder="Enter your message" {...field} />}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="sr-only">Message</FormLabel>
+              <FormControl>
+                <Textarea placeholder="Enter your message" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        <Button type="submit" className="w-full" size={'lg'} disabled={true} loading={true}>
+        <Button
+          type="submit"
+          className="w-full"
+          size={'lg'}
+          disabled={isPending}
+          loading={isPending}
+        >
           <SendIcon size={16} /> Send
         </Button>
       </form>
