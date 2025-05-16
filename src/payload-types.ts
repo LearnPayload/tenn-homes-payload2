@@ -280,6 +280,7 @@ export interface Agent {
   firstName: string;
   lastName: string;
   fullName?: string | null;
+  initials?: string | null;
   /**
    * e.g., "Realtor", "Senior Agent", "Broker"
    */
@@ -576,6 +577,7 @@ export interface AgentsSelect<T extends boolean = true> {
   firstName?: T;
   lastName?: T;
   fullName?: T;
+  initials?: T;
   title?: T;
   bio?: T;
   yearsExperience?: T;

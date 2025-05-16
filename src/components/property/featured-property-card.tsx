@@ -1,13 +1,19 @@
-import { DecoratedProperty, PropertyDecorator } from '@/repositories/property-decorator'
+'use client'
 import { Card, CardContent } from '../ui/card'
 import { PropertyStatus } from './status'
 import { Media } from '@/payload-types'
-import { BathIcon, BedDoubleIcon, MapPin, RulerIcon, SquareIcon } from 'lucide-react'
+import { BathIcon, BedDoubleIcon, RulerIcon } from 'lucide-react'
 import Link from 'next/link'
 import { PropertyShare } from './share'
-export const FeaturedPropertyCard = ({ property }: { property: DecoratedProperty }) => {
+import { useProperty } from './context'
+
+export const FeaturedPropertyCard = () => {
+  const property = useProperty()
   const images = property?.photos as Media[]
-  const featureImage = images[0] ?? { url: 'https://placehold.co/600x400', alt: property.title }
+  const featureImage = images[0] ?? {
+    url: 'https://placehold.co/600x400',
+    alt: property.original.title,
+  }
   return (
     <Link href={property.url} className="group block relative h-full">
       <Card className="overflow-hidden py-0 h-full group-hover:shadow-md gap-0">
@@ -20,7 +26,7 @@ export const FeaturedPropertyCard = ({ property }: { property: DecoratedProperty
             className="object-cover h-[210px] w-full transition-transform duration-500 group-hover:scale-105"
           />
           <div className="absolute top-4 left-4">
-            <PropertyStatus listingStatus={property.listingStatus} />
+            <PropertyStatus />
           </div>
         </div>
         <CardContent className="p-4">

@@ -1,5 +1,4 @@
-import { FeaturedPropertyCard } from '@/components/property/feartured-property-card'
-import { Link } from '@payloadcms/ui'
+import { FeaturedPropertyCard } from '@/components/property/featured-property-card'
 import { db } from '@/repositories'
 import {
   Carousel,
@@ -8,6 +7,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
+import { PropertyProvider } from '@/components/property/context'
 
 export async function FeaturedProperties() {
   const properties = await db.properties.getMany({
@@ -35,12 +35,14 @@ export async function FeaturedProperties() {
         >
           <CarouselContent className="pb-1">
             {properties.map((property) => (
-              <CarouselItem
-                key={property.id}
-                className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4 h-auto"
-              >
-                <FeaturedPropertyCard key={property.id} property={property} />
-              </CarouselItem>
+              <PropertyProvider property={property} key={property.original.id}>
+                <CarouselItem
+                  key={property.original.id}
+                  className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4 h-auto"
+                >
+                  <FeaturedPropertyCard />
+                </CarouselItem>
+              </PropertyProvider>
             ))}
           </CarouselContent>
           <CarouselPrevious />

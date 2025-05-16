@@ -22,6 +22,11 @@ export async function seedProperties(payload: Payload): Promise<void> {
   const media = await payload.find({
     collection: 'media',
     limit: 100,
+    where: {
+      filename: {
+        contains: 'property_',
+      },
+    },
   })
 
   const agents = await payload.find({

@@ -2,13 +2,14 @@ import { PropertyType } from '@/config/collections/Properties/property-type-opti
 import { HeatingType } from '@/config/collections/Properties/heating-type-options'
 import { formatPrice } from '@/lib/format-price'
 import route from '@/lib/routes'
-import type { Feature, Property, Location as LocationType, Media, Agent } from '@/payload-types'
+import type { Feature, Property, Location as LocationType, Media, Location } from '@/payload-types'
 import slugify from 'slugify'
 import { ListingStatus } from '@/config/collections/Properties/listing-status-map'
 
 export type DecoratedProperty = {
   original: Property
   price: string
+  address: Property['address']
   listingStatus: ListingStatus
   details: {
     bedrooms: number
@@ -36,6 +37,10 @@ export class PropertyDecorator {
 
   get price(): string {
     return formatPrice(this.original.price)
+  }
+
+  get address(): Property['address'] {
+    return this.original.address
   }
 
   get photos(): DecoratedPhoto[] {
@@ -96,6 +101,7 @@ export class PropertyDecorator {
 
   toJSON(): DecoratedProperty {
     return {
+      address: this.address,
       agent: this.agent,
       price: this.price,
       listingStatus: this.listingStatus,

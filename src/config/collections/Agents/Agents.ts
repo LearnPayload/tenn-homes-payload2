@@ -50,6 +50,28 @@ export const Agents: CollectionConfig = {
               },
             },
             {
+              name: 'initials',
+              type: 'text',
+              virtual: true,
+              admin: {
+                hidden: true, // hides the field from the admin panel
+              },
+              hooks: {
+                beforeChange: [
+                  ({ siblingData }) => {
+                    // ensures data is not stored in DB
+                    delete siblingData['initials']
+                  },
+                ],
+                afterRead: [
+                  ({ data }) => {
+                    if (!data) return null
+                    return `${data.firstName.charAt(0)}${data.lastName.charAt(0)}`
+                  },
+                ],
+              },
+            },
+            {
               name: 'title',
               type: 'text',
               label: 'Title',
