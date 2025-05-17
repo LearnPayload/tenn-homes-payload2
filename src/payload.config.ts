@@ -2,7 +2,6 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -14,6 +13,7 @@ import { Locations } from './config/collections/Locations/Locations'
 import { Properties } from './config/collections/Properties/Properties'
 import { Features } from './config/collections/Features/Features'
 import { Agents } from './config/collections/Agents/Agents'
+import ContactSubmissions from './config/collections/ContactSubmissions'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -26,7 +26,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Locations, Properties, Features, Agents],
+  collections: [Users, Media, Locations, Properties, Features, Agents, ContactSubmissions],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -38,10 +38,5 @@ export default buildConfig({
     },
   }),
   sharp,
-  plugins: [
-    payloadCloudPlugin(),
-    formBuilderPlugin({
-      // storage-adapter-placeholder
-    }),
-  ],
+  plugins: [payloadCloudPlugin()],
 })

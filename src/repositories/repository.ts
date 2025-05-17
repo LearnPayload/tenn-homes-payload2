@@ -1,5 +1,5 @@
 import { DecoratedProperty } from '@/repositories/property-decorator'
-import { Where } from 'payload'
+import { CollectionConfig, Where } from 'payload'
 
 interface QueryParams {
   limit?: number
@@ -11,6 +11,7 @@ interface QueryParams {
 export interface PropertyQueryParams extends QueryParams {}
 
 export interface BaseRepositoryInterface<T, TQueryParams extends QueryParams> {
+  collection: CollectionConfig['slug']
   getMany(params: TQueryParams): Promise<T[]>
   getOne(id: string): Promise<T | null>
 }

@@ -1,17 +1,21 @@
 import { BaseRepository } from './base-repository'
 import { PropertyQueryParams, PropertyRepositoryInterface } from './repository'
 import { DecoratedProperty, PropertyDecorator } from './property-decorator'
-import { forbidden, notFound } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import { cache } from 'react'
+import { CollectionSlug } from 'payload'
+import { Property } from '@/payload-types'
 
 export class PropertyRepository extends BaseRepository implements PropertyRepositoryInterface {
+  collection: CollectionSlug = 'properties'
+
   getOne = cache(async (id: string): Promise<DecoratedProperty> => {
     const payload = await this.client
     try {
-      const property = await payload.findByID({
-        collection: 'properties',
+      const property = (await payload.findByID({
+        collection: this.collection,
         id,
-      })
+      })) as Property
       return new PropertyDecorator(property).toJSON()
     } catch (error) {
       notFound()
