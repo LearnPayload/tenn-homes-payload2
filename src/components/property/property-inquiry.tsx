@@ -4,7 +4,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { MailIcon, PhoneCallIcon } from "lucide-react"
 import { useProperty } from "./context"
 import { Media } from "@/payload-types"
-import { PropertyInquiryForm } from "@/forms/property-inquiry/form"
+import { Button } from "../ui/button"
+import { Input } from "../ui/input"
+import { Textarea } from "../ui/textarea"
 
 const backgroundColors = [
   "#D8E2DC", // Ash gray
@@ -65,7 +67,17 @@ export const PropertyInquiry = () => {
           </div>
         </div>
       </div>
-      <PropertyInquiryForm />
+      <form className="flex flex-1 w-full flex-col gap-2">
+        <div className="flex flex-col gap-2"></div>
+        <Input placeholder="Enter your name" />
+        <Input placeholder="Enter your email" />
+        <Input placeholder="Enter your phone" />
+        <Textarea placeholder="Enter your message" />
+
+        <Button type="submit" className="w-full">
+          Send
+        </Button>
+      </form>
     </div>
   )
 }

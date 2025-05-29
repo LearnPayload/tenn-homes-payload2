@@ -27,7 +27,6 @@ const formatAddress: AfterReadHook = async ({ doc }) => {
 }
 
 const generateUrl = async (id: string, req: PayloadRequest) => {
-  console.log("generating url", req)
   const property = await req.payload.findByID({ collection: "properties", id })
   const location = property.location as Location
   const fullAddress = [property.street, location.city, location.state_abbr, location.zip].map((l) =>
