@@ -9,6 +9,7 @@ import { Payload } from "payload"
 export async function seedProperties(payload: Payload): Promise<void> {
   // Get all locations to randomly assign to properties
   const locations = await local.location.getAll()
+  const locationDocs = locations?.docs || []
 
   // Get all features to randomly assign to properties
   const features = await payload.find({
@@ -72,7 +73,7 @@ export async function seedProperties(payload: Payload): Promise<void> {
   const sampleProperties: Omit<Property, "id" | "updatedAt" | "createdAt">[] = Array.from(
     { length: 100 },
     () => {
-      const location = faker.helpers.arrayElement(locations).original
+      const location = faker.helpers.arrayElement(locationDocs).original
       const street = faker.location.streetAddress()
       const title = `${faker.helpers.arrayElement(titleAdjectives)} ${faker.helpers.arrayElement(titleNouns)} in the ${faker.helpers.arrayElement(titleRegions)}`
       return {

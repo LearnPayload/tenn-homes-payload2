@@ -1,4 +1,5 @@
 import { getPayloadClient } from "@/db/client"
+import { FindOptions } from "@/types"
 import { notFound } from "next/navigation"
 import { CollectionSlug, PaginatedDocs, Where } from "payload"
 
@@ -18,6 +19,13 @@ export type DepthZeroFields<T> = {
           ? Array<string | number> // Handle nested array types
           : T[K] // Keep as-is if not a relationship array
         : T[K] // Keep primitive types as-is
+}
+
+export const defaultFindOptions: FindOptions = {
+  limit: 25,
+  page: 1,
+  sort: "relevance",
+  depth: 2, // Default to no population
 }
 
 /**
@@ -50,10 +58,10 @@ export abstract class BaseRepository<T, D> {
   }
   async getFirst(where: Where = {}): Promise<D | null> {
     const result = await this.getAll(where)
-    if (result.length === 0) {
+    if (!result || result.totalDocs === 0) {
       return null
     }
-    return result[0]
+    return result.docs[0]
   }
 
   async getBySlug(slug: string): Promise<D | null> {
@@ -67,15 +75,22 @@ export abstract class BaseRepository<T, D> {
 
     return this.createDecorator(result.docs[0]) ?? null
   }
-  async getAll(where: Where = {}): Promise<D[]> {
+  async getAll(
+    where: Where = {},
+    searchCriteria: FindOptions = defaultFindOptions,
+  ): Promise<PaginatedDocs<D>> {
     const payload = await getPayloadClient()
 
     const result = (await payload.find({
       collection: this.collection,
       where,
+      ...searchCriteria,
     })) as PaginatedDocs<T>
 
-    return result.docs.map((d) => this.createDecorator(d)) ?? []
+    return {
+      ...result,
+      docs: result.docs.map((doc) => this.createDecorator(doc)),
+    } as PaginatedDocs<D>
   }
   async getByID(id: number | string): Promise<D> {
     const payload = await getPayloadClient()
@@ -101,8 +116,8 @@ export abstract class BaseRepository<T, D> {
   findOrCreate = async (data: DataInput<T>, field: keyof DataInput<T>) => {
     const results = await this.getAll({ [field]: { equals: data[field] } })
 
-    if (results.length > 0) {
-      return results[0] //
+    if (results && results.totalDocs > 0) {
+      return results.docs[0]
     } else {
       return await this.create(data as DataInput<T>)
     }

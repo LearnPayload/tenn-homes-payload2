@@ -196,6 +196,7 @@ export interface Location {
    * City of the zip code
    */
   city: string;
+  city_slug: string;
   /**
    * State abbreviation of the zip code
    */
@@ -544,6 +545,7 @@ export interface LocationsSelect<T extends boolean = true> {
   formattedLocation?: T;
   zip?: T;
   city?: T;
+  city_slug?: T;
   state_abbr?: T;
   state_name?: T;
   county?: T;
