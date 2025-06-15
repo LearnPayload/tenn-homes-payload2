@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
 import {
   Sheet,
   SheetContent,
@@ -9,9 +9,9 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/components/ui/sheet'
-import { Menu } from 'lucide-react'
-import { Logo } from '@/components/logo'
+} from "@/components/ui/sheet"
+import { Menu } from "lucide-react"
+import { Logo } from "@/components/logo"
 export const Header = () => {
   return (
     <header>
@@ -21,7 +21,7 @@ export const Header = () => {
         </Link>
 
         <nav className="hidden tablet:flex items-center gap-8 bg-background/50 px-6 py-2 rounded-full">
-          <Link href="/listings" className="text-sm font-medium text-primary hover:text-primary">
+          <Link href="/search" className="text-sm font-medium text-primary hover:text-primary">
             LISTINGS
           </Link>
           <Link href="/about" className="text-sm font-medium text-primary hover:text-primary">
