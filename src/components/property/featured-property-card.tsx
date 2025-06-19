@@ -26,7 +26,7 @@ export const FeaturedPropertyCard = () => {
             className="object-cover h-[210px] w-full transition-transform duration-500 group-hover:scale-105"
           />
           <div className="absolute top-4 left-4">
-            <PropertyStatus />
+            <PropertyStatus listingStatus={property.listingStatus} />
           </div>
         </div>
         <CardContent className="p-4">

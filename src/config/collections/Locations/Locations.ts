@@ -47,6 +47,15 @@ export const Locations: CollectionConfig = {
           label: "City",
         },
         {
+          name: "slug",
+          type: "text",
+          required: true,
+          admin: {
+            readOnly: true,
+          },
+          label: "City Slug",
+        },
+        {
           name: "state_abbr",
           type: "text",
           required: true,

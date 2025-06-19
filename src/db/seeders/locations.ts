@@ -3,6 +3,7 @@ import { local } from "@/repository"
 import csv from "csv-parser"
 import fs from "fs"
 import path, { dirname } from "path"
+import slugify from "slugify"
 import { fileURLToPath } from "url"
 
 type RawData = Omit<Location, "id" | "updatedAt" | "createdAt"> & {
@@ -24,6 +25,10 @@ export async function seedLocations(): Promise<void> {
         locations.push({
           zip: String(data.code),
           city: data.city,
+          slug: slugify(data.city, {
+            lower: true,
+            strict: true,
+          }),
           state_abbr: data.state_abbr,
           state_name: "Tennessee",
           county: data.county,

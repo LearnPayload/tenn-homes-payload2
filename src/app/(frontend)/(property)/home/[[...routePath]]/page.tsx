@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ routePath
     alternates: {
       canonical: property.url,
     },
-    title: property.address.full_address,
+    title: `${property.address.full_address} | Tenn Homes`,
     description: property.description,
   }
 }

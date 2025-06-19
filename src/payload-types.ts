@@ -196,6 +196,7 @@ export interface Location {
    * City of the zip code
    */
   city: string;
+  slug: string;
   /**
    * State abbreviation of the zip code
    */
@@ -238,6 +239,13 @@ export interface Property {
   };
   photos?: (number | Media)[] | null;
   street: string;
+  /**
+   * Select the location on the map.
+   *
+   * @minItems 2
+   * @maxItems 2
+   */
+  point: [number, number];
   address: {
     street: string;
     city: string;
@@ -544,6 +552,7 @@ export interface LocationsSelect<T extends boolean = true> {
   formattedLocation?: T;
   zip?: T;
   city?: T;
+  slug?: T;
   state_abbr?: T;
   state_name?: T;
   county?: T;
@@ -576,6 +585,7 @@ export interface PropertiesSelect<T extends boolean = true> {
       };
   photos?: T;
   street?: T;
+  point?: T;
   address?: T;
   location?: T;
   features?: T;
