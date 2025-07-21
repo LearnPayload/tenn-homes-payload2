@@ -1,7 +1,6 @@
 @layer theme, components, utilities;
-@import 'tailwindcss/theme.css' layer(theme);
-@import 'tailwindcss/utilities.css' layer(utilities);
-@import '../../styles/theme.css' layer(theme);
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
 
 #field-photos {
   .upload-field-card {

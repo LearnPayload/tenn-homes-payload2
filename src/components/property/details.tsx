@@ -12,7 +12,7 @@ export const PropertyDetails = () => {
         <div className="flex flex-col gap-1">
           <h1 className="text-2xl font-bold">{property.title}</h1>
           <div className="flex flex-wrap gap-2">
-            <PropertyStatus />
+            <PropertyStatus listingStatus={property.listingStatus} />
           </div>
         </div>
         <div>

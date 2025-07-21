@@ -1,0 +1,142 @@
+export const CondoIcon = () => {
+  return (
+    <svg width={50} height={50} viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      {/* Left building - smaller and boxy */}
+      <rect
+        x={20}
+        y={45}
+        width={25}
+        height={40}
+        fill="#ffffff"
+        stroke="currentColor"
+        strokeWidth={4}
+      />
+      {/* Left building flat roof */}
+      <rect
+        x={18}
+        y={43}
+        width={29}
+        height={4}
+        fill="#ffffff"
+        stroke="currentColor"
+        strokeWidth={4}
+      />
+      {/* Right building - taller */}
+      <rect
+        x={45}
+        y={30}
+        width={30}
+        height={55}
+        fill="#ffffff"
+        stroke="currentColor"
+        strokeWidth={4}
+      />
+      {/* Right building angled roof (pitched to one side) */}
+      <polygon points="43,30 75,20 75,30" fill="#ffffff" stroke="currentColor" strokeWidth={4} />
+      {/* Main entrance (on right building) */}
+      <rect
+        x={55}
+        y={70}
+        width={10}
+        height={15}
+        fill="#ffffff"
+        stroke="currentColor"
+        strokeWidth={2}
+      />
+      {/* Door knob */}
+      <circle cx={62} cy={77} r={1} fill="currentColor" />
+      {/* Windows on left building */}
+      <rect
+        x={24}
+        y={52}
+        width={6}
+        height={8}
+        fill="#ffffff"
+        stroke="currentColor"
+        strokeWidth={2}
+      />
+      <rect
+        x={34}
+        y={52}
+        width={6}
+        height={8}
+        fill="#ffffff"
+        stroke="currentColor"
+        strokeWidth={2}
+      />
+      <rect
+        x={24}
+        y={67}
+        width={6}
+        height={6}
+        fill="#ffffff"
+        stroke="currentColor"
+        strokeWidth={2}
+      />
+      <rect
+        x={34}
+        y={67}
+        width={6}
+        height={6}
+        fill="#ffffff"
+        stroke="currentColor"
+        strokeWidth={2}
+      />
+      {/* Windows on right building */}
+      <rect
+        x={48}
+        y={38}
+        width={8}
+        height={8}
+        fill="#ffffff"
+        stroke="currentColor"
+        strokeWidth={2}
+      />
+      <rect
+        x={58}
+        y={38}
+        width={8}
+        height={8}
+        fill="#ffffff"
+        stroke="currentColor"
+        strokeWidth={2}
+      />
+      <rect
+        x={68}
+        y={38}
+        width={5}
+        height={8}
+        fill="#ffffff"
+        stroke="currentColor"
+        strokeWidth={2}
+      />
+      <rect
+        x={48}
+        y={52}
+        width={8}
+        height={8}
+        fill="#ffffff"
+        stroke="currentColor"
+        strokeWidth={2}
+      />
+      <rect
+        x={66}
+        y={52}
+        width={7}
+        height={8}
+        fill="#ffffff"
+        stroke="currentColor"
+        strokeWidth={2}
+      />
+      <rect
+        x={48}
+        y={66}
+        width={5}
+        height={6}
+        fill="#ffffff"
+        stroke="currentColor"
+        strokeWidth={2}
+      />
+    </svg>
+  )
+}

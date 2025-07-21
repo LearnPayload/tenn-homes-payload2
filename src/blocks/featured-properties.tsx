@@ -31,7 +31,7 @@ export async function FeaturedProperties() {
           className="flex-1 w-full"
         >
           <CarouselContent className="pb-1">
-            {properties.map((property) => (
+            {properties?.docs.map((property) => (
               <PropertyProvider property={property.original} key={property.id}>
                 <CarouselItem
                   key={property.id}

@@ -148,6 +148,15 @@ export const Properties: CollectionConfig = {
             },
 
             {
+              name: "point",
+              type: "point",
+              required: true,
+              admin: {
+                description: "Select the location on the map.",
+              },
+            },
+
+            {
               name: "address",
               type: "text",
               required: true,
